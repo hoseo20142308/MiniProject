@@ -1,29 +1,53 @@
 #include "GameObject.h"
 #include "TextureManager.h"
 
-GameObject::GameObject(const char* texturesheet, SDL_Renderer* ren)
+GameObject::GameObject(const char* texturesheet)
 {
-	renderer = ren;
-	objTexture = TextureManager::LoadTexture(texturesheet, ren);
-}
+	
+	objTexture = TextureManager::LoadTexture(texturesheet);
 
-void GameObject::Update()
-{
 	xpos = 0;
-	ypos = 50;
+	ypos = 0;
 
-	srcRect.h = 82;
-	srcRect.w = 128;
+	srcRect.h = NULL;
+	srcRect.w = NULL;
 	srcRect.x = 0;
 	srcRect.y = 0;
 
 	destRect.x = xpos;
 	destRect.y = ypos;
-	destRect.w = srcRect.w * 2;
-	destRect.h = srcRect.h * 2;
+	destRect.w = srcRect.w;
+	destRect.h = srcRect.h;
+}
+
+GameObject::GameObject(const char* texturesheet, int x, int y)
+{
+	objTexture = TextureManager::LoadTexture(texturesheet);
+
+	xpos = x;
+	ypos = y;
+
+	srcRect.h = 1536;
+	srcRect.w = 3072;
+	srcRect.x = 0;
+	srcRect.y = 0;
+
+	destRect.x = xpos;
+	destRect.y = ypos;
+	destRect.w = 640;
+	destRect.h = 480;
+
+}
+
+void GameObject::Update()
+{
+	destRect.x--;
+
+	if (destRect.x <= -640)destRect.x = 640;
+
 }
 
 void GameObject::Render()
 {
-	SDL_RenderCopy(renderer, objTexture, &srcRect, &destRect);
+	SDL_RenderCopy(Game::renderer, objTexture, NULL, &destRect);
 }

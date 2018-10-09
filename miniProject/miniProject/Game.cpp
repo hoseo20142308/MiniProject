@@ -1,39 +1,46 @@
 #include "Game.h"
 #include "TextureManager.h"
+#include "ECS.h"
+#include "Components.h"
 #include "GameObject.h"
 
-GameObject* Player;
+Manager manager;
+GameObject* backGround1;
+GameObject* backGround2;
 
+auto& player(manager.addEntity());
+//auto& enemy(manager.addEntity());
+
+SDL_Renderer* Game::renderer = nullptr;
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
 
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
 	{
-		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_SHOWN);
+		Window = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_SHOWN);
 
-		if (m_pWindow != 0)
+		if (Window != 0)
 		{
-			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
+			renderer = SDL_CreateRenderer(Window, -1, 0);
 
 		}
 
-		m_bRunning = true;
+		isRunning = true;
 
-		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
+		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
 
-		m_pTexture = TextureManager::LoadTexture("Assets/animate.png", m_pRenderer);
+		backGround1 = new GameObject("Assets/bg.png", 0, 0);
+		backGround2 = new GameObject("Assets/bg.png", 640, 0);
 
-		Player = new GameObject("Assets/animate-alpha.png", m_pRenderer);
+		player.addComponent<PositionComponent>(100, 340);
+		player.addComponent<SpriteComponent>("Assets/animate-alpha.png");
 		
 
-		m_sourceRectangle.w = 128;
-		m_sourceRectangle.h = 82;
+		//enemy.addComponent<PositionComponent>(300, 100);
+		//enemy.addComponent<SpriteComponent>("Assets/animate.png");
 
-		m_destinationRectangle.x = m_sourceRectangle.x = 0;
-		m_destinationRectangle.y = m_sourceRectangle.y = 0;
-		m_destinationRectangle.w = m_sourceRectangle.w;
-		m_destinationRectangle.h = m_sourceRectangle.h;
+
 
 		
 	}
@@ -52,28 +59,28 @@ void Game::render()
 {
 
 	// clear the renderer to the draw color
-	SDL_RenderClear(m_pRenderer);	// draw color로 render 지우기
-									// 원본 사각형과 대상 사각형의 위치와 크기에 따라 화면에 다르게 나타남...
-	SDL_RenderCopy(m_pRenderer, m_pTexture,
-		&m_sourceRectangle, &m_destinationRectangle);
-
-	Player->Render();
+	SDL_RenderClear(renderer);	
+									
+	backGround1->Render();
+	backGround2->Render();
+	manager.draw();
 	
-	SDL_RenderPresent(m_pRenderer);	// 화면 제시하기
+	SDL_RenderPresent(renderer);	
 }
 
 void Game::update()
 {
-	m_sourceRectangle.x = 128 * int(((SDL_GetTicks() / 100) % 6));
-
-	Player->Update();
+	backGround1->Update();
+	backGround2->Update();
+	manager.update();
+	
 }
 
 void Game::clean()
 {
 	std::cout << "cleaning game\n";
-	SDL_DestroyWindow(m_pWindow);
-	SDL_DestroyRenderer(m_pRenderer);
+	SDL_DestroyWindow(Window);
+	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
 }
 
@@ -85,7 +92,10 @@ void Game::handleEvents()
 		switch (event.type)
 		{
 		case SDL_QUIT:
-			m_bRunning = false;
+			isRunning = false;
+			break;
+		case SDL_KEYDOWN:
+			player.getComponent<PositionComponent>().addPos(3, 0);
 			break;
 		default:
 			break;
