@@ -1,22 +1,15 @@
 #pragma once
-#include "Game.h"
+
+#include "LoaderParams.h"
+using namespace std;
 
 class GameObject
 {
 public:
-	GameObject(const char* texturesheet);
-	GameObject(const char* texturesheet, int x, int y);
-	~GameObject();
-
-	void Update();
-	void Render();
-
-
-private:
-	int xpos;
-	int ypos;
-
-	SDL_Texture* objTexture;
-	SDL_Rect srcRect, destRect;
-
+	virtual void draw() = 0;
+	virtual void update() = 0;
+	virtual void clean() = 0;
+protected:
+	GameObject(const LoaderParams* pParams) {}
+	virtual ~GameObject() {}
 };

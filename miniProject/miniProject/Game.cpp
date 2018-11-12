@@ -1,54 +1,39 @@
 #include "Game.h"
-#include "TextureManager.h"
-#include "ECS.h"
-#include "Components.h"
-#include "GameObject.h"
 
-Manager manager;
-GameObject* backGround1;
-GameObject* backGround2;
-
-auto& player(manager.addEntity());
-//auto& enemy(manager.addEntity());
-
-SDL_Renderer* Game::renderer = nullptr;
+Game* Game::s_pInstance = 0;
 
 bool Game::init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-
 	if (SDL_Init(SDL_INIT_EVERYTHING) >= 0)
 	{
-		Window = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_SHOWN);
+		m_pWindow = SDL_CreateWindow(title, xpos, ypos, width, height, SDL_WINDOW_SHOWN);
 
-		if (Window != 0)
+		if (m_pWindow != 0)
 		{
-			renderer = SDL_CreateRenderer(Window, -1, 0);
-
+			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 		}
 
-		isRunning = true;
+		m_bRunning = true;
 
-		SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
 
-		backGround1 = new GameObject("Assets/bg.png", 0, 0);
-		backGround2 = new GameObject("Assets/bg.png", 640, 0);
+		//m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
+		if (!TheTextureManager::Instance()->load("assets/animate-alpha.png",
+			"animate", m_pRenderer))
+		{
+			return false;
+		}
 
-		player.addComponent<PositionComponent>(100, 340);
-		player.addComponent<SpriteComponent>("Assets/animate-alpha.png");
+		m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
 		
-
-		//enemy.addComponent<PositionComponent>(300, 100);
-		//enemy.addComponent<SpriteComponent>("Assets/animate.png");
+		m_gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
 
 
-
-		
 	}
 	else
 	{
 		return false;	// sdl could not initialize
 	}
-	
 
 
 
@@ -59,46 +44,62 @@ void Game::render()
 {
 
 	// clear the renderer to the draw color
-	SDL_RenderClear(renderer);	
-									
-	backGround1->Render();
-	backGround2->Render();
-	manager.draw();
+	SDL_RenderClear(m_pRenderer);	// draw color로 render 지우기
+									// 원본 사각형과 대상 사각형의 위치와 크기에 따라 화면에 다르게 나타남...
+									//SDL_RenderCopy(m_pRenderer, m_pTexture,
+									//	&m_sourceRectangle, &m_destinationRectangle);
 	
-	SDL_RenderPresent(renderer);	
+	for (std::vector<GameObject*>::size_type i = 0;
+		i != m_gameObjects.size(); i++)
+	{
+		m_gameObjects[i]->draw();
+	}
+
+
+
+
+	SDL_RenderPresent(m_pRenderer);	// 화면 제시하기
 }
 
 void Game::update()
 {
-	backGround1->Update();
-	backGround2->Update();
-	manager.update();
-	
+
+	for (std::vector<GameObject*>::size_type i = 0;
+		i != m_gameObjects.size(); i++)
+	{
+		m_gameObjects[i]->update();
+	}
 }
 
 void Game::clean()
 {
+	TheInputHandler::Instance()->clean();
 	std::cout << "cleaning game\n";
-	SDL_DestroyWindow(Window);
-	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(m_pWindow);
+	SDL_DestroyRenderer(m_pRenderer);
+	SDL_Quit();
+}
+
+void Game::quit()
+{
+	std::cout << "cleaning game\n";
+	SDL_DestroyWindow(m_pWindow);
+	SDL_DestroyRenderer(m_pRenderer);
 	SDL_Quit();
 }
 
 void Game::handleEvents()
 {
-	SDL_Event event;
-	if (SDL_PollEvent(&event))
+	TheInputHandler::Instance()->update();
+}
+
+Game* Game::Instance()
+{
+	if (s_pInstance == 0)
 	{
-		switch (event.type)
-		{
-		case SDL_QUIT:
-			isRunning = false;
-			break;
-		case SDL_KEYDOWN:
-			player.getComponent<PositionComponent>().addPos(3, 0);
-			break;
-		default:
-			break;
-		}
+		s_pInstance = new Game();
+		return s_pInstance;
 	}
+
+	return s_pInstance;
 }

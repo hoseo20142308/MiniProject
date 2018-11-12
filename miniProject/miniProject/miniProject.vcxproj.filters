@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="헤더 파일\ECS">
-      <UniqueIdentifier>{af9b0d29-4bc2-4989-a4e8-ce2b0587de16}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -30,6 +27,24 @@
     <ClCompile Include="TextureManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="LoaderParams.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLGameObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -41,17 +56,23 @@
     <ClInclude Include="TextureManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ECS.h">
-      <Filter>헤더 파일\ECS</Filter>
+    <ClInclude Include="Vector2D.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Components.h">
-      <Filter>헤더 파일\ECS</Filter>
+    <ClInclude Include="Enemy.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteComponent.h">
-      <Filter>헤더 파일\ECS</Filter>
+    <ClInclude Include="InputHandler.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="PositionComponent.h">
-      <Filter>헤더 파일\ECS</Filter>
+    <ClInclude Include="LoaderParams.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLGameObject.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

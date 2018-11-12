@@ -3,11 +3,18 @@
 #include <iostream>
 #include <SDL_image.h>
 #include "SDL.h"
+#include "TextureManager.h"
+#include "SDLGameObject.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "InputHandler.h"
+#include <vector>
+
+
 
 class Game
 {
 public:
-	Game() {}
 	~Game() {}
 
 	bool init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
@@ -15,12 +22,31 @@ public:
 	void update();
 	void handleEvents();
 	void clean();
-	bool running() { return isRunning; }
+	void quit();
+	bool running() { return m_bRunning; }
+
+	static Game* Instance();
+
+	SDL_Renderer* getRenderer() const { return m_pRenderer; }
+
+private:
+	Game() {};
+
+	// create the s_pInstance member variable
+	static Game* s_pInstance;
 
 	
-	static SDL_Renderer* renderer;
-private:
-	
-	SDL_Window * Window;
-	bool isRunning;
+
+	SDL_Window * m_pWindow;
+
+	SDL_Renderer* m_pRenderer;
+
+	std::vector<SDLGameObject*> m_gameObjects;
+
+	TextureManager* m_textureManager;
+
+	bool m_bRunning;
 };
+
+// create the typedef
+typedef Game TheGame;
