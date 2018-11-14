@@ -18,15 +18,15 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
 
 		//m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
-		if (!TheTextureManager::Instance()->load("assets/animate-alpha.png",
-			"animate", m_pRenderer))
+		if (!allTextureLoad())
 		{
 			return false;
 		}
-
-		m_gameObjects.push_back(new Player(new LoaderParams(100, 100, 128, 82, "animate")));
 		
-		m_gameObjects.push_back(new Enemy(new LoaderParams(300, 300, 128, 82, "animate")));
+		player = new Player(new LoaderParams(100, 100, 108, 123, "animate_dekulink_running"));
+
+		m_gameObjects.push_back(player);
+		
 
 
 	}
@@ -102,4 +102,31 @@ Game* Game::Instance()
 	}
 
 	return s_pInstance;
+}
+
+bool Game::allTextureLoad()
+{
+	if (!TheTextureManager::Instance()->load("assets/animate-alpha.png",
+		"animate", m_pRenderer))
+	{
+		return false;
+	}
+	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Running.png",
+		"animate_dekulink_running", m_pRenderer))
+	{
+		return false;
+	}
+	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Jumping.png",
+		"animate_dekulink_jumping", m_pRenderer))
+	{
+		return false;
+	}
+	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Falling.png",
+		"animate_dekulink_falling", m_pRenderer))
+	{
+		return false;
+	}
+
+
+	return true;
 }

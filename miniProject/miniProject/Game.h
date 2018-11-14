@@ -35,11 +35,14 @@ private:
 	// create the s_pInstance member variable
 	static Game* s_pInstance;
 
-	
+	bool allTextureLoad();
 
 	SDL_Window * m_pWindow;
 
 	SDL_Renderer* m_pRenderer;
+
+	// 주요 게임오브젝트
+	Player* player;
 
 	std::vector<SDLGameObject*> m_gameObjects;
 

@@ -9,14 +9,62 @@ void Player::draw()
 }
 void Player::update()
 {
-	m_velocity.setX(0);
-	m_velocity.setY(0);
+	setSprite();
+	
+	onGravity();
 	handleInput();	// add our function
 
-	m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
-
+	setFrame();
 	
 	SDLGameObject::update();
+}
+
+void Player::setSprite()
+{
+	if (isStateChange)
+	{
+		switch (state)
+		{
+		case Player::RUNNING:
+			m_textureID = "animate_dekulink_running";
+			break;
+		case Player::JUMPING:
+			m_textureID = "animate_dekulink_jumping";
+			break;
+		case Player::FALLING:
+			m_textureID = "animate_dekulink_falling";
+			break;
+		case Player::HOVERING:
+			break;
+		case Player::HURT:
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void Player::setFrame()
+{
+	switch (state)
+	{
+	case Player::RUNNING:
+		m_currentFrame = int(((SDL_GetTicks() / 100) % 4));
+		break;
+	case Player::JUMPING:
+		m_currentFrame = int(((SDL_GetTicks() / 100) % 1));
+		break;
+	case Player::FALLING:
+		m_currentFrame = int(((SDL_GetTicks() / 100) % 1));
+		break;
+	case Player::HOVERING:
+		break;
+	case Player::HURT:
+		break;
+	default:
+		break;
+	}
+
 }
 
 void Player::handleInput()
@@ -36,5 +84,36 @@ void Player::handleInput()
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN))
 	{
 		m_velocity.setY(2);
+	}
+}
+
+void Player::onGravity()
+{
+	switch (state)
+	{
+	case Player::RUNNING:
+		m_velocity.setX(0);
+		m_velocity.setY(0);
+		break;
+	case Player::JUMPING:
+		m_velocity.setX(0);
+		m_velocity.setY(0);
+		break;
+	case Player::FALLING:
+		m_velocity.setX(0);
+		m_velocity.setY(5);
+		break;
+	case Player::HOVERING:
+		m_velocity.setX(0);
+		m_velocity.setY(2);
+		break;
+	case Player::HURT:
+		m_velocity.setX(0);
+		m_velocity.setY(0);
+		break;
+	default:
+		m_velocity.setX(0);
+		m_velocity.setY(0);
+		break;
 	}
 }
