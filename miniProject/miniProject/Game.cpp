@@ -17,15 +17,22 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
 
-		//m_textureManager.load("Assets/animate-alpha.png", "animate", m_pRenderer);
 		if (!allTextureLoad())
 		{
 			return false;
 		}
 		
+		// 플레이어 객체 생성
 		player = new Player(new LoaderParams(100, 100, 108, 123, "animate_dekulink_running"));
 
+		// 배경 생성
+		m_backgrounds.push_back(new BackGround(new LoaderParams(0, 0, 640, 480, "background")));
+		m_backgrounds.push_back(new BackGround(new LoaderParams(640, 0, 640, 480, "background")));
+
+		// 출력할 배열에 플레이어 저장
 		m_gameObjects.push_back(player);
+
+		m_gameObjects.push_back(new Floor(new LoaderParams(100, 400, 80, 50, "floor")));
 		
 
 
@@ -45,10 +52,15 @@ void Game::render()
 
 	// clear the renderer to the draw color
 	SDL_RenderClear(m_pRenderer);	// draw color로 render 지우기
-									// 원본 사각형과 대상 사각형의 위치와 크기에 따라 화면에 다르게 나타남...
-									//SDL_RenderCopy(m_pRenderer, m_pTexture,
-									//	&m_sourceRectangle, &m_destinationRectangle);
 	
+	// 배경 출력
+	for (std::vector<GameObject*>::size_type i = 0;
+		i != m_backgrounds.size(); i++)
+	{
+		m_backgrounds[i]->draw();
+	}
+	
+	// 게임오브젝트 출력
 	for (std::vector<GameObject*>::size_type i = 0;
 		i != m_gameObjects.size(); i++)
 	{
@@ -63,7 +75,14 @@ void Game::render()
 
 void Game::update()
 {
+	// 배경 업데이트
+	for (std::vector<GameObject*>::size_type i = 0;
+		i != m_backgrounds.size(); i++)
+	{
+		m_backgrounds[i]->update();
+	}
 
+	// 게임오브젝트 업데이트
 	for (std::vector<GameObject*>::size_type i = 0;
 		i != m_gameObjects.size(); i++)
 	{
@@ -123,6 +142,16 @@ bool Game::allTextureLoad()
 	}
 	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Falling.png",
 		"animate_dekulink_falling", m_pRenderer))
+	{
+		return false;
+	}
+	if (!TheTextureManager::Instance()->load("assets/Resource/BackGround.png",
+		"background", m_pRenderer))
+	{
+		return false;
+	}
+	if (!TheTextureManager::Instance()->load("assets/Resource/Floor.png",
+		"floor", m_pRenderer))
 	{
 		return false;
 	}

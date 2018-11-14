@@ -5,6 +5,9 @@
 
 class Player : public SDLGameObject
 {
+	
+public:
+
 	enum CharacterState
 	{
 		RUNNING,
@@ -13,13 +16,23 @@ class Player : public SDLGameObject
 		HOVERING,
 		HURT
 	};
-public:
+
 	Player(const LoaderParams* p_Params);
 	//void load(int x, int y, int width, int height, std::string textureID);
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {};
+
+	void setState(CharacterState c_state) { state = c_state; }
+
+	SDL_Rect getRect() { return rect; }
+
 private:
+
+	SDL_Rect rect;	// 충돌체크를 위한 렉트
+
+	void setRect();
+
 	bool isStateChange = true;		// 상태가 바뀌었는지 알기 위한 변수
 
 	float value_Gravity = 5;		// 중력 값

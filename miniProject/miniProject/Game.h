@@ -7,6 +7,8 @@
 #include "SDLGameObject.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Floor.h"
+#include "BackGround.h"
 #include "InputHandler.h"
 #include <vector>
 
@@ -24,6 +26,7 @@ public:
 	void clean();
 	void quit();
 	bool running() { return m_bRunning; }
+	Player* PlayerIns() { return player; }
 
 	static Game* Instance();
 
@@ -44,6 +47,7 @@ private:
 	// 주요 게임오브젝트
 	Player* player;
 
+	std::vector<SDLGameObject*> m_backgrounds;
 	std::vector<SDLGameObject*> m_gameObjects;
 
 	TextureManager* m_textureManager;

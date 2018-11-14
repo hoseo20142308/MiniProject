@@ -5,7 +5,8 @@ Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams)
 }
 void Player::draw()
 {
-	SDLGameObject::draw(); // we now use SDLGameObject
+	SDLGameObject::draw();	// we now use SDLGameObject
+	setRect();	// 렉트 값 설정
 }
 void Player::update()
 {
@@ -17,6 +18,37 @@ void Player::update()
 	setFrame();
 	
 	SDLGameObject::update();
+}
+
+void Player::setRect()
+{
+	switch (state)
+	{
+	case Player::RUNNING:
+		rect.x = m_position.GetX() + 35;
+		rect.y = m_position.GetY() + 15;
+		rect.w = 65;
+		rect.h = 100;
+		break;
+	case Player::JUMPING:
+		rect.x = m_position.GetX() + 25;
+		rect.y = m_position.GetY() + 10;
+		rect.w = 65;
+		rect.h = 80;
+		break;
+	case Player::FALLING:
+		rect.x = m_position.GetX() + 20;
+		rect.y = m_position.GetY() + 50;
+		rect.w = 65;
+		rect.h = 80;
+		break;
+	case Player::HOVERING:
+		break;
+	case Player::HURT:
+		break;
+	default:
+		break;
+	}
 }
 
 void Player::setSprite()
