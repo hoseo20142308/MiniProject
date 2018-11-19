@@ -24,10 +24,16 @@ public:
 	virtual void clean() {};
 
 	void setState(CharacterState c_state) { state = c_state; }
+	CharacterState getState() { return state; }
 
 	SDL_Rect getRect() { return rect; }
 
 private:
+
+	// 점프 관련 변수
+	int jumpLimit = 150;	// 최대 점프 높이
+	int jumpSpeed = -8;		// 점프 속도
+	int jumpDist = 0;		// 점프 거리
 
 	SDL_Rect rect;	// 충돌체크를 위한 렉트
 
@@ -41,4 +47,5 @@ private:
 	void setFrame();		// 스프라이트 이미지 별 모션 갯수가 다르기에 currentFrame 재설정
 	void handleInput();		// 입력 이벤트
 	void onGravity();		// 중력
+	void jump();
 };

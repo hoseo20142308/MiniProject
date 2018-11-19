@@ -117,6 +117,10 @@ void Player::handleInput()
 	{
 		m_velocity.setY(2);
 	}
+	if (TheInputHandler::Instance()->getMouseButtonState(InputHandler::LEFT))
+	{
+		jump();
+	}
 }
 
 void Player::onGravity()
@@ -128,8 +132,14 @@ void Player::onGravity()
 		m_velocity.setY(0);
 		break;
 	case Player::JUMPING:
+		if (jumpDist >= jumpLimit)	// 최대 점프거리에 도달하면
+		{
+			state = FALLING;	// 상태를 떨어짐 상태로
+			jumpDist = 0;		// 점프 거리를 초기화
+		}
 		m_velocity.setX(0);
-		m_velocity.setY(0);
+		m_velocity.setY(jumpSpeed);
+		jumpDist -= jumpSpeed;
 		break;
 	case Player::FALLING:
 		m_velocity.setX(0);
@@ -148,4 +158,25 @@ void Player::onGravity()
 		m_velocity.setY(0);
 		break;
 	}
+}
+
+void Player::jump()
+{
+	switch (state)
+	{
+	case Player::RUNNING:
+		state = JUMPING;
+		break;
+	case Player::JUMPING:	
+		break;
+	case Player::FALLING:
+		break;
+	case Player::HOVERING:
+		break;
+	case Player::HURT:
+		break;
+	default:
+		break;
+	}
+
 }

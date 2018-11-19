@@ -47,6 +47,7 @@ private:
 	// 주요 게임오브젝트
 	Player* player;
 
+	std::vector<SDLGameObject*> m_floors;
 	std::vector<SDLGameObject*> m_backgrounds;
 	std::vector<SDLGameObject*> m_gameObjects;
 

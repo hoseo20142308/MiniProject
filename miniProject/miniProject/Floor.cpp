@@ -23,10 +23,24 @@ void Floor::update()
 
 void Floor::playerOnGround()
 {
-	if (checkCollision(rect, TheGame::Instance()->PlayerIns()->getRect()))
+	switch (TheGame::Instance()->PlayerIns()->getState())
 	{
-		TheGame::Instance()->PlayerIns()->setState(Player::RUNNING);
+		case Player::RUNNING:
+			break;
+		case Player::JUMPING:
+			break;
+		case Player::HOVERING:
+			break;
+		case Player::FALLING :
+			if (checkCollision(rect, TheGame::Instance()->PlayerIns()->getRect()))
+			{
+				TheGame::Instance()->PlayerIns()->setState(Player::RUNNING);
+			}
+			break;
+		
 	}
+
+	
 }
 
 void Floor::setRect()
