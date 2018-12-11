@@ -38,6 +38,7 @@ public:
 	void onMouseButtonUp(SDL_Event event);
 	void onKeyDown();
 	void onKeyUp();
+	void reset();
 	Vector2D* GetMousePosition();
 
 	const Uint8* m_keystates;

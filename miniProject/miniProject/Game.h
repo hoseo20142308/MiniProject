@@ -10,6 +10,7 @@
 #include "Floor.h"
 #include "BackGround.h"
 #include "InputHandler.h"
+#include "GameStateMachine.h"
 #include <vector>
 
 
@@ -26,14 +27,19 @@ public:
 	void clean();
 	void quit();
 	bool running() { return m_bRunning; }
+
 	Player* PlayerIns() { return player; }
 
 	static Game* Instance();
 
 	SDL_Renderer* getRenderer() const { return m_pRenderer; }
 
+	GameStateMachine* getStateMachine() { return m_pGameStateMachine; }
+
 private:
 	Game() {};
+
+	GameStateMachine* m_pGameStateMachine;
 
 	// create the s_pInstance member variable
 	static Game* s_pInstance;

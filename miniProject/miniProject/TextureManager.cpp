@@ -21,7 +21,7 @@ bool TextureManager::load(std::string fileName, std::string   id,
 }
 
 void TextureManager::draw(std::string id,
-	int x, int y, int width, int height,
+	int x, int y, int width, int height, int dst_width, int dst_height, 
 	SDL_Renderer* pRenderer, SDL_RendererFlip flip)
 {
 	SDL_Rect srcRect;
@@ -29,8 +29,10 @@ void TextureManager::draw(std::string id,
 
 	srcRect.x = 0;
 	srcRect.y = 0;
-	srcRect.w = destRect.w = width;
-	srcRect.h = destRect.h = height;
+	srcRect.w = width;
+	srcRect.h = height;
+	destRect.w = dst_width;
+	destRect.h = dst_height;
 	destRect.x = x;
 	destRect.y = y;
 
@@ -39,15 +41,17 @@ void TextureManager::draw(std::string id,
 }
 
 void TextureManager::drawFrame(std::string id, int x, int y,
-	int width, int height, int currentRow, int currentFrame,
+	int width, int height, int dst_width, int dst_height,  int currentRow, int currentFrame,
 	SDL_Renderer* pRenderer, SDL_RendererFlip flip)
 {
 	SDL_Rect srcRect;
 	SDL_Rect destRect;
 	srcRect.x = width * currentFrame;
 	srcRect.y = height * (currentRow - 1);
-	srcRect.w = destRect.w = width;
-	srcRect.h = destRect.h = height;
+	srcRect.w = width;
+	srcRect.h = height;
+	destRect.w = dst_width;
+	destRect.h = dst_height;
 	destRect.x = x;
 	destRect.y = y;
 
@@ -64,4 +68,9 @@ TextureManager* TextureManager::Instance()
 		return s_pInstance;
 	}
 	return s_pInstance;
+}
+
+void TextureManager::clearFromTextureMap(std::string id)
+{
+	m_textureMap.erase(id);
 }

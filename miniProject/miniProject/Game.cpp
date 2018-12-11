@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "MenuState.h"
+#include "PlayState.h"
 
 Game* Game::s_pInstance = 0;
 
@@ -12,6 +14,9 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 		{
 			m_pRenderer = SDL_CreateRenderer(m_pWindow, -1, 0);
 		}
+
+		m_pGameStateMachine = new GameStateMachine;
+		m_pGameStateMachine->changeState(MenuState::Instance());
 
 		m_bRunning = true;
 
@@ -54,7 +59,7 @@ void Game::render()
 	SDL_RenderClear(m_pRenderer);	// draw color로 render 지우기
 	
 	// 배경 출력
-	for (std::vector<GameObject*>::size_type i = 0;
+	/*for (std::vector<GameObject*>::size_type i = 0;
 		i != m_backgrounds.size(); i++)
 	{
 		m_backgrounds[i]->draw();
@@ -65,7 +70,9 @@ void Game::render()
 		i != m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->draw();
-	}
+	}*/
+
+	m_pGameStateMachine->render();
 
 
 
@@ -76,7 +83,7 @@ void Game::render()
 void Game::update()
 {
 	// 배경 업데이트
-	for (std::vector<GameObject*>::size_type i = 0;
+	/*for (std::vector<GameObject*>::size_type i = 0;
 		i != m_backgrounds.size(); i++)
 	{
 		m_backgrounds[i]->update();
@@ -87,7 +94,9 @@ void Game::update()
 		i != m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->update();
-	}
+	}*/
+
+	m_pGameStateMachine->update();
 }
 
 void Game::clean()

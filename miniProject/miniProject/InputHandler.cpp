@@ -185,3 +185,7 @@ Vector2D * InputHandler::GetMousePosition()
 	return m_mousePosition;
 }
 
+void InputHandler::reset()
+{
+}
+
