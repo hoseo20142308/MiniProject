@@ -54,6 +54,11 @@ bool PlayState::onEnter()
 	{
 		return false;
 	}
+	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Hovering.png",
+		"dekulink_hovering", TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
 	if (!TheTextureManager::Instance()->load("assets/Resource/BackGround.png",
 		"background", TheGame::Instance()->getRenderer()))
 	{
@@ -65,15 +70,18 @@ bool PlayState::onEnter()
 		return false;
 	}
 
-	GameObject* background1 = new BackGround(new LoaderParams(0, 0, 640, 480, "background"));
+	GameObject* background1 = new BackGround(new LoaderParams(0, 0, 640, 430, 640, 480, "background"));
 	m_gameObjects.push_back(background1);
 
-	GameObject* background2 = new BackGround(new LoaderParams(640, 0, 640, 480, "background"));
+	GameObject* background2 = new BackGround(new LoaderParams(640, 0, 640, 430, 640, 480, "background"));
 	m_gameObjects.push_back(background2);
 
-	GameObject* player = new Player(new LoaderParams(100, 100, 108, 123, "dekulink_running"));
-
+	GameObject* player = new Player(new LoaderParams(100, 307, 108, 123, "dekulink_running"));
 	m_gameObjects.push_back(player);
+
+	GameObject* floor = new Floor(new LoaderParams(0, 430, 33, 100, 1000, 100, "floor"));
+	m_gameObjects.push_back(floor);
+	list_floors.push_back(floor);
 
 	
 	std::cout << "entering PlayState\n";

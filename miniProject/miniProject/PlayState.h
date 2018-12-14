@@ -13,12 +13,15 @@ public:
 	virtual std::string getStateID() const { return s_playID; }
 
 	static PlayState* Instance();
+
+	// 게임오브젝트 배열
+	vector<GameObject*> list_floors;
+
 private:
+
 	PlayState() {};
 	static const std::string s_playID;
 	static PlayState* s_pInstance;
-
-	std::vector<GameObject*> m_gameObjects;
 
 };
 

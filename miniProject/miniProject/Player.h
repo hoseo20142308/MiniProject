@@ -26,18 +26,19 @@ public:
 	void setState(CharacterState c_state) { state = c_state; }
 	CharacterState getState() { return state; }
 
-	SDL_Rect getRect() { return rect; }
-
 private:
+
+	// 입력 딜레이 처리 변수
+	Uint32 inputTime, inputSuccessTime;
+	float delay_Input = 300.0f;
 
 	// 점프 관련 변수
 	int jumpLimit = 150;	// 최대 점프 높이
-	int jumpSpeed = -8;		// 점프 속도
+	int jumpSpeed = 10;		// 점프 속도
 	int jumpDist = 0;		// 점프 거리
 
-	SDL_Rect rect;	// 충돌체크를 위한 렉트
+	// 호버링 
 
-	void setRect();
 
 	bool isStateChange = true;		// 상태가 바뀌었는지 알기 위한 변수
 
@@ -46,6 +47,9 @@ private:
 	void setSprite();		// 상태별 스프라이트 이미지 재설정
 	void setFrame();		// 스프라이트 이미지 별 모션 갯수가 다르기에 currentFrame 재설정
 	void handleInput();		// 입력 이벤트
-	void onGravity();		// 중력
+	void move();			// 상태에 따른 이동 처리 함수
+	void onFloor();
 	void jump();
+	bool checkCollision(SDLGameObject* coll);
+	bool checkCollision_to_Floor(SDLGameObject* coll);
 };

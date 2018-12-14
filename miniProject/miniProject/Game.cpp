@@ -20,25 +20,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		m_bRunning = true;
 
-		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);
-
-		if (!allTextureLoad())
-		{
-			return false;
-		}
-		
-		// 플레이어 객체 생성
-		player = new Player(new LoaderParams(100, 100, 108, 123, "animate_dekulink_running"));
-
-		// 배경 생성
-		m_backgrounds.push_back(new BackGround(new LoaderParams(0, 0, 640, 480, "background")));
-		m_backgrounds.push_back(new BackGround(new LoaderParams(640, 0, 640, 480, "background")));
-
-		// 출력할 배열에 플레이어 저장
-		m_gameObjects.push_back(player);
-
-		m_gameObjects.push_back(new Floor(new LoaderParams(100, 400, 80, 50, "floor")));
-		
+		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);	
 
 
 	}

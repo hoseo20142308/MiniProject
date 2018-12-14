@@ -45,8 +45,6 @@ public:
 	
 private:
 
-
-
 	InputHandler();
 	~InputHandler() {};
 	static InputHandler* s_pInstance;

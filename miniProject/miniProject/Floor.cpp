@@ -1,5 +1,5 @@
 #include "Floor.h"
-
+#include "TextureManager.h"
 
 
 Floor::Floor(const LoaderParams* p_Params) : SDLGameObject(p_Params)
@@ -7,21 +7,36 @@ Floor::Floor(const LoaderParams* p_Params) : SDLGameObject(p_Params)
 	m_currentFrame = 0;
 }
 
-
-Floor::~Floor()
+void Floor::draw()
 {
+	TextureManager::Instance()->drawTile(m_textureID,
+		(Uint32)m_position.GetX(), (Uint32)m_position.GetY(),
+		m_width, m_height, m_dst_width, m_dst_height, m_currentRow, m_currentFrame,
+		TheGame::Instance()->getRenderer());
 }
 
 void Floor::update()
 {
-	move_floor();
-	
-	playerOnGround();
+	move();
+	check_Pass();
 
 	SDLGameObject::update();
 }
 
-void Floor::playerOnGround()
+void Floor::move()
+{
+	m_velocity.setX(-moveSpeed);
+}
+
+void Floor::check_Pass()
+{
+	if (m_position.GetX() - m_dst_width < m_dst_width)
+	{
+		this->setActive(false);
+	}
+}
+
+/*void Floor::playerOnGround()
 {
 	switch (TheGame::Instance()->PlayerIns()->getState())
 	{
@@ -41,17 +56,9 @@ void Floor::playerOnGround()
 	}
 
 	
-}
+}*/
 
-void Floor::setRect()
-{
-	rect.x = m_position.GetX();
-	rect.y = m_position.GetY();
-	rect.w = m_width;
-	rect.h = m_height;
-}
-
-bool Floor::checkCollision(SDL_Rect rect1, SDL_Rect rect2)
+/*bool Floor::checkCollision(SDL_Rect rect1, SDL_Rect rect2)
 {
 	// 사각형의 변 
 	int leftA, leftB;
@@ -75,15 +82,4 @@ bool Floor::checkCollision(SDL_Rect rect1, SDL_Rect rect2)
 	if (leftA >= rightB) { return false; } 
 	// A의 변의 어느 것도 B 외부에 없으면
 	return true;
-}
-
-void Floor::move_floor()
-{
-	m_velocity.setX(0);
-}
-
-void Floor::draw()
-{
-	SDLGameObject::draw(); // we now use SDLGameObject
-	setRect();
-}
+}*/

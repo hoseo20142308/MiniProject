@@ -23,6 +23,11 @@ public:
 		SDL_Renderer* pRenderer,
 		SDL_RendererFlip flip = SDL_FLIP_NONE);
 
+	void drawTile(std::string id, int x, int y, int width, int height, int dst_width, int dst_height,
+		int currentRow, int currentFrame,
+		SDL_Renderer* pRenderer,
+		SDL_RendererFlip flip = SDL_FLIP_NONE);
+
 	// 함수 추가
 	static TextureManager* Instance();
 

@@ -59,6 +59,45 @@ void TextureManager::drawFrame(std::string id, int x, int y,
 		&destRect, 0, 0, flip);
 }
 
+void TextureManager::drawTile(std::string id, int x, int y, int width, int height, int dst_width, int dst_height, int currentRow, int currentFrame, SDL_Renderer * pRenderer, SDL_RendererFlip flip)
+{
+	SDL_Rect srcRect;
+	SDL_Rect destRect;
+	srcRect.x = width * 0;
+	srcRect.y = height * 0;
+	srcRect.w = width;
+	srcRect.h = height;
+
+	destRect.w = width;
+	destRect.h = height;
+	destRect.x = x;
+	destRect.y = y;
+
+	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+
+	srcRect.x = width * 1;
+	srcRect.y = height * 0;
+	srcRect.w = width;
+	srcRect.h = height;
+
+	for (int i = 0; i < dst_width - width * 2; i += width)
+	{
+		
+		destRect.x += width;
+
+		SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+	}
+
+	srcRect.x = width * 2;
+	srcRect.y = height * 0;
+	srcRect.w = width;
+	srcRect.h = height;
+
+	destRect.x += width;
+
+	SDL_RenderCopyEx(pRenderer, m_textureMap[id], &srcRect, &destRect, 0, 0, flip);
+}
+
 TextureManager* TextureManager::Instance()
 {
 	static TextureManager* s_pInstance = 0;
