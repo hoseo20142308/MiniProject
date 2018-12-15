@@ -20,7 +20,7 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 
 		m_bRunning = true;
 
-		SDL_SetRenderDrawColor(m_pRenderer, 255, 0, 0, 255);	
+		SDL_SetRenderDrawColor(m_pRenderer, 0, 0, 0, 255);	
 
 
 	}
@@ -37,47 +37,19 @@ bool Game::init(const char* title, int xpos, int ypos, int width, int height, bo
 void Game::render()
 {
 
-	// clear the renderer to the draw color
-	SDL_RenderClear(m_pRenderer);	// draw color로 render 지우기
 	
-	// 배경 출력
-	/*for (std::vector<GameObject*>::size_type i = 0;
-		i != m_backgrounds.size(); i++)
-	{
-		m_backgrounds[i]->draw();
-	}
-	
-	// 게임오브젝트 출력
-	for (std::vector<GameObject*>::size_type i = 0;
-		i != m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->draw();
-	}*/
+	SDL_RenderClear(m_pRenderer);	
 
 	m_pGameStateMachine->render();
 
 
 
 
-	SDL_RenderPresent(m_pRenderer);	// 화면 제시하기
+	SDL_RenderPresent(m_pRenderer);
 }
 
 void Game::update()
 {
-	// 배경 업데이트
-	/*for (std::vector<GameObject*>::size_type i = 0;
-		i != m_backgrounds.size(); i++)
-	{
-		m_backgrounds[i]->update();
-	}
-
-	// 게임오브젝트 업데이트
-	for (std::vector<GameObject*>::size_type i = 0;
-		i != m_gameObjects.size(); i++)
-	{
-		m_gameObjects[i]->update();
-	}*/
-
 	m_pGameStateMachine->update();
 }
 
@@ -112,41 +84,4 @@ Game* Game::Instance()
 	}
 
 	return s_pInstance;
-}
-
-bool Game::allTextureLoad()
-{
-	if (!TheTextureManager::Instance()->load("assets/animate-alpha.png",
-		"animate", m_pRenderer))
-	{
-		return false;
-	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Running.png",
-		"animate_dekulink_running", m_pRenderer))
-	{
-		return false;
-	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Jumping.png",
-		"animate_dekulink_jumping", m_pRenderer))
-	{
-		return false;
-	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Falling.png",
-		"animate_dekulink_falling", m_pRenderer))
-	{
-		return false;
-	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/BackGround.png",
-		"background", m_pRenderer))
-	{
-		return false;
-	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/Floor.png",
-		"floor", m_pRenderer))
-	{
-		return false;
-	}
-
-
-	return true;
 }

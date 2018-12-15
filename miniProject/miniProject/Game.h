@@ -28,8 +28,6 @@ public:
 	void quit();
 	bool running() { return m_bRunning; }
 
-	Player* PlayerIns() { return player; }
-
 	static Game* Instance();
 
 	SDL_Renderer* getRenderer() const { return m_pRenderer; }
@@ -44,20 +42,9 @@ private:
 	// create the s_pInstance member variable
 	static Game* s_pInstance;
 
-	bool allTextureLoad();
-
 	SDL_Window * m_pWindow;
 
 	SDL_Renderer* m_pRenderer;
-
-	// 주요 게임오브젝트
-	Player* player;
-
-	std::vector<SDLGameObject*> m_floors;
-	std::vector<SDLGameObject*> m_backgrounds;
-	std::vector<SDLGameObject*> m_gameObjects;
-
-	TextureManager* m_textureManager;
 
 	bool m_bRunning;
 };

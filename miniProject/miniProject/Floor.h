@@ -7,6 +7,7 @@ class Floor : public SDLGameObject
 {
 public:
 	Floor(const LoaderParams* p_Params);
+	Floor(const LoaderParams* p_Params, int type);
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {};
@@ -14,8 +15,6 @@ public:
 private:
 
 	int moveSpeed = 5;
-
-	void move();
 
 	void check_Pass();
 };

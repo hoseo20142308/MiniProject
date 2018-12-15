@@ -15,6 +15,7 @@ public:
 	static PlayState* Instance();
 
 	// 게임오브젝트 배열
+	vector<GameObject*> m_gameObjects;
 	vector<GameObject*> list_floors;
 
 private:

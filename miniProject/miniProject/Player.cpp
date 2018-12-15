@@ -120,7 +120,7 @@ void Player::move()
 		break;
 	case Player::FALLING:	
 		m_velocity.setX(0);
-		m_velocity.setY(5);
+		m_velocity.setY(10);
 		break;
 	case Player::HOVERING:
 		m_velocity.setX(0);
@@ -218,14 +218,14 @@ bool Player::checkCollision_to_Floor(SDLGameObject * coll)
 
 	leftA = m_position.GetX();
 	rightA = m_position.GetX() + m_dst_width;
-	topA = m_position.GetY() + m_dst_height - 5;
+	topA = m_position.GetY() + m_dst_height - 10;
 	bottomA = m_position.GetY() + m_dst_height;
 
 	//Calculate the sides of rect B
 	leftB = coll->getPosition().GetX();
 	rightB = coll->getPosition().GetX() + coll->getWidth();
 	topB = coll->getPosition().GetY();
-	bottomB = coll->getPosition().GetY() + 5;
+	bottomB = coll->getPosition().GetY() + 10;
 
 	//If any of the sides from A are outside of B
 	if (bottomA <= topB) { return false; }

@@ -8,8 +8,10 @@ BackGround::BackGround(const LoaderParams* p_Params) : SDLGameObject(p_Params)
 }
 
 
-BackGround::~BackGround()
+BackGround::BackGround(const LoaderParams* p_Params, int type) : SDLGameObject(p_Params)
 {
+	m_currentFrame = 0;
+	this->type = type;
 }
 
 void BackGround::update()

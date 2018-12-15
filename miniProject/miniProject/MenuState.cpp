@@ -1,5 +1,6 @@
 #include "MenuState.h"
 #include "PlayState.h"
+#include "ModeSelectState.h"
 #include "Game.h"
 #include "MenuButton.h"
 #include <iostream>
@@ -28,12 +29,12 @@ void MenuState::render()
 
 bool MenuState::onEnter()
 {
-	if (!TheTextureManager::Instance()->load("assets/button.png", "playbutton", TheGame::Instance()->getRenderer()))
+	if (!TheTextureManager::Instance()->load("assets/Resources/MenuState_Title/button.png", "playbutton", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
 
-	if (!TheTextureManager::Instance()->load("assets/exit.png", "exitbutton", TheGame::Instance()->getRenderer()))
+	if (!TheTextureManager::Instance()->load("assets/Resources/MenuState_Title/exit.png", "exitbutton", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
@@ -76,7 +77,7 @@ MenuState * MenuState::Instance()
 
 void MenuState::s_menuToPlay()
 {
-	TheGame::Instance()->getStateMachine()->changeState(PlayState::Instance());
+	TheGame::Instance()->getStateMachine()->changeState(ModeSelectState::Instance());
 	std::cout << "Play button clicked" << endl;
 }
 

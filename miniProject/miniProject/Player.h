@@ -18,7 +18,7 @@ public:
 	};
 
 	Player(const LoaderParams* p_Params);
-	//void load(int x, int y, int width, int height, std::string textureID);
+	
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {};
@@ -33,7 +33,7 @@ private:
 	float delay_Input = 300.0f;
 
 	// 점프 관련 변수
-	int jumpLimit = 150;	// 최대 점프 높이
+	int jumpLimit = 200;	// 최대 점프 높이
 	int jumpSpeed = 10;		// 점프 속도
 	int jumpDist = 0;		// 점프 거리
 

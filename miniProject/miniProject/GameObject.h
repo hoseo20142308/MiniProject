@@ -16,6 +16,6 @@ public:
 protected:
 
 	bool active = true;
-	GameObject(const LoaderParams* pParams) {}
+	GameObject(const LoaderParams* pParams) { }
 	virtual ~GameObject() {}
 };

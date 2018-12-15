@@ -9,7 +9,6 @@ PlayState* PlayState::s_pInstance = 0;
 
 void PlayState::update()
 {
-	// nothing for now
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->update();
@@ -25,7 +24,6 @@ void PlayState::update()
 
 void PlayState::render()
 {
-	// nothing for now
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->draw();
@@ -34,38 +32,43 @@ void PlayState::render()
 
 bool PlayState::onEnter()
 {
-	if (!TheTextureManager::Instance()->load("assets/animate-alpha.png",
-		"animate", TheGame::Instance()->getRenderer()))
-	{
-		return false;
-	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Running.png",
+	if (!TheTextureManager::Instance()->load("assets/Resources/PlayState/DekuLink_Running.png",
 		"dekulink_running", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Jumping.png",
+	if (!TheTextureManager::Instance()->load("assets/Resources/PlayState/DekuLink_Jumping.png",
 		"dekulink_jumping", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Falling.png",
+	if (!TheTextureManager::Instance()->load("assets/Resources/PlayState/DekuLink_Falling.png",
 		"dekulink_falling", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/DekuLink_Hovering.png",
+	if (!TheTextureManager::Instance()->load("assets/Resources/PlayState/DekuLink_Hovering.png",
 		"dekulink_hovering", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/BackGround.png",
+	if (!TheTextureManager::Instance()->load("assets/Resources/PlayState/BackGround.png",
 		"background", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/Resource/Floor.png",
+	if (!TheTextureManager::Instance()->load("assets/Resources/PlayState/Floor.png",
 		"floor", TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
+	if (!TheTextureManager::Instance()->load("assets/Resources/PlayState/Flower.png",
+		"flower", TheGame::Instance()->getRenderer()))
+	{
+		return false;
+	}
+	if (!TheTextureManager::Instance()->load("assets/Resources/PlayState/Dragonfly.png",
+		"dragonfly", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
@@ -83,6 +86,12 @@ bool PlayState::onEnter()
 	m_gameObjects.push_back(floor);
 	list_floors.push_back(floor);
 
+	GameObject* enemy1 = new Enemy(new LoaderParams(2000, 380, 50, 50, "flower"));
+	m_gameObjects.push_back(enemy1);
+
+	GameObject* enemy2 = new Enemy(new LoaderParams(2500, 150, 49, 34, 98, 68, "dragonfly"));
+	m_gameObjects.push_back(enemy2);
+
 	
 	std::cout << "entering PlayState\n";
 	return true;
@@ -96,7 +105,14 @@ bool PlayState::onExit()
 	}
 	m_gameObjects.clear();
 
-	TheTextureManager::Instance()->clearFromTextureMap("helicopter");
+	TheTextureManager::Instance()->clearFromTextureMap("dekulink_running");
+	TheTextureManager::Instance()->clearFromTextureMap("dekulink_jumping");
+	TheTextureManager::Instance()->clearFromTextureMap("dekulink_falling");
+	TheTextureManager::Instance()->clearFromTextureMap("dekulink_hovering");
+	TheTextureManager::Instance()->clearFromTextureMap("background");
+	TheTextureManager::Instance()->clearFromTextureMap("floor");
+	TheTextureManager::Instance()->clearFromTextureMap("flower");
+	TheTextureManager::Instance()->clearFromTextureMap("dragonfly");
 	std::cout << "exiting PlayState\n";
 	return true;
 }

@@ -5,6 +5,13 @@
 Floor::Floor(const LoaderParams* p_Params) : SDLGameObject(p_Params)
 {
 	m_currentFrame = 0;
+	m_velocity.setX(moveSpeed);
+}
+
+Floor::Floor(const LoaderParams * p_Params, int type) : SDLGameObject(p_Params)
+{
+	m_velocity.setX(moveSpeed);
+	this->type = type;
 }
 
 void Floor::draw()
@@ -17,20 +24,14 @@ void Floor::draw()
 
 void Floor::update()
 {
-	move();
 	check_Pass();
 
 	SDLGameObject::update();
 }
 
-void Floor::move()
-{
-	m_velocity.setX(-moveSpeed);
-}
-
 void Floor::check_Pass()
 {
-	if (m_position.GetX() - m_dst_width < m_dst_width)
+	if (m_position.GetX() - m_dst_width < m_dst_width && type != 2)
 	{
 		this->setActive(false);
 	}

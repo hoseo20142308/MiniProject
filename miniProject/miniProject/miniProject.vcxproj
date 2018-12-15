@@ -136,6 +136,7 @@
     <ClCompile Include="AnimatedGraphic.cpp" />
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Flag.cpp" />
     <ClCompile Include="Floor.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -143,14 +144,19 @@
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="LoaderParams.cpp" />
+    <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MakerManager.cpp" />
+    <ClCompile Include="MakerState.cpp" />
     <ClCompile Include="MenuButton.cpp" />
     <ClCompile Include="MenuState.cpp" />
+    <ClCompile Include="ModeSelectState.cpp" />
     <ClCompile Include="PauseState.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayState.cpp" />
     <ClCompile Include="SDLGameObject.cpp" />
+    <ClCompile Include="Sign.cpp" />
+    <ClCompile Include="StageSelectState.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
@@ -158,6 +164,7 @@
     <ClInclude Include="AnimatedGraphic.h" />
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Flag.h" />
     <ClInclude Include="Floor.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
@@ -166,12 +173,18 @@
     <ClInclude Include="GameStateMachine.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="LoaderParams.h" />
+    <ClInclude Include="LTexture.h" />
+    <ClInclude Include="MakerManager.h" />
+    <ClInclude Include="MakerState.h" />
     <ClInclude Include="MenuButton.h" />
     <ClInclude Include="MenuState.h" />
+    <ClInclude Include="ModeSelectState.h" />
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayState.h" />
     <ClInclude Include="SDLGameObject.h" />
+    <ClInclude Include="Sign.h" />
+    <ClInclude Include="StageSelectState.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>

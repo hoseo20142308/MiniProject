@@ -6,7 +6,7 @@ class BackGround : public SDLGameObject
 {
 public:
 	BackGround(const LoaderParams* p_Params);
-	~BackGround();
+	BackGround(const LoaderParams* p_Params, int type);
 	virtual void draw();
 	virtual void update();
 	virtual void clean() {};

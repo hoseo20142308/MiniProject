@@ -37,17 +37,17 @@ void GameOverState::render()
 
 bool GameOverState::onEnter()
 {
-	if (!TheTextureManager::Instance()->load("assets/gameover.png",
+	if (!TheTextureManager::Instance()->load("assets/Resources/GameOverState/gameover.png",
 		"gameovertext", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/main.png",
+	if (!TheTextureManager::Instance()->load("assets/Resources/GameOverState/main.png",
 		"mainbutton", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
-	if (!TheTextureManager::Instance()->load("assets/restart.png",
+	if (!TheTextureManager::Instance()->load("assets/Resources/GameOverState/restart.png",
 		"restartbutton", TheGame::Instance()->getRenderer()))
 	{
 		return false;

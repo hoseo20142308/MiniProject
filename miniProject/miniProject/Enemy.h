@@ -7,9 +7,12 @@ class Enemy : public SDLGameObject
 {
 public:
 	Enemy(const LoaderParams* pParams);
-	virtual void draw();
+	Enemy(const LoaderParams* pParams, int type);
+	//virtual void draw();
 	virtual void update();
 	virtual void clean() {};
 private:
-	void handleInput();
+	int moveSpeed = 5;
+
+	void setSprite();
 };
