@@ -14,7 +14,7 @@ public:
 	void setSpeed(int value) { moveSpeed = value; }
 	int getSpeed() { return moveSpeed; }
 private:
-	int moveSpeed = 5;
+	int moveSpeed = 10;
 	bool isOutWindow = false;
 	void move_bg();
 	void change_position();

@@ -14,6 +14,8 @@ public:
 	static MakerState* Instance();
 
 	vector<GameObject*> list_UI;
+	vector<GameObject*> list_background;
+
 
 private:
 	MakerState() {};

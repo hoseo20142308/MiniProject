@@ -14,7 +14,7 @@ public:
 
 private:
 
-	int moveSpeed = 5;
+	int moveSpeed = 10;
 
 	void check_Pass();
 };

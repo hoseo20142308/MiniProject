@@ -1,5 +1,6 @@
 #include "MakerManager.h"
 #include "MakerState.h"
+#include "PlayState.h"
 #include "InputHandler.h"
 #include "SDLGameObject.h"
 
@@ -26,6 +27,7 @@ void MakerManager::update()
 	{
 		scrollRight();
 	}
+
 }
 
 MakerManager * MakerManager::Instance()
@@ -53,7 +55,7 @@ void MakerManager::make_enemy_flower()
 
 void MakerManager::make_enemy_dragonfly()
 {
-	GameObject* dragonfly = new Enemy(new LoaderParams(0, 0, 49, 34, "dragonfly"), 2);
+	GameObject* dragonfly = new Enemy(new LoaderParams(0, 0, 49, 34, 98, 68, "dragonfly"), 2);
 
 	MakerState::Instance()->m_gameObjects.push_back(dragonfly);
 }
@@ -93,6 +95,19 @@ void MakerManager::make_etc_flag()
 	MakerState::Instance()->m_gameObjects.push_back(flag);
 }
 
+void MakerManager::play()
+{
+	for (int i = 0; i < MakerState::Instance()->m_gameObjects.size(); i++)
+	{
+		dynamic_cast<SDLGameObject*>(MakerState::Instance()->m_gameObjects[i])->getPosition() += MakerManager::Instance()->s_position;
+	}
+
+	TheGame::Instance()->getStateMachine()->changeState(PlayState::Instance());
+
+	printf("play button cliked\n");
+
+}
+
 void MakerManager::uiSwitch()
 {
 	InputTime = SDL_GetTicks();
@@ -123,6 +138,8 @@ void MakerManager::scrollLeft()
 		dynamic_cast<SDLGameObject*>(MakerState::Instance()->m_gameObjects[i])->getPosition() += moveVelo;
 	}
 
+	printf("%d, %d\n", s_position.GetX(), s_position.GetY());
+
 }
 
 void MakerManager::scrollRight()
@@ -137,4 +154,6 @@ void MakerManager::scrollRight()
 	{
 		dynamic_cast<SDLGameObject*>(MakerState::Instance()->m_gameObjects[i])->getPosition() -= moveVelo;
 	}
+
+	//printf("%d, %d\n", s_position.GetX(), s_position.GetY());
 }

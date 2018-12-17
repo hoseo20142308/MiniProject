@@ -81,16 +81,13 @@
     <ClCompile Include="ModeSelectState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="StageSelectState.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="MakerState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MakerManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="LTexture.cpp">
+    <ClCompile Include="FileManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -161,16 +158,13 @@
     <ClInclude Include="ModeSelectState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="StageSelectState.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="MakerState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="MakerManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="LTexture.h">
+    <ClInclude Include="FileManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,8 @@
 #include "Player.h"
 #include "PlayState.h"
+#include "GameOverState.h"
+#include "ModeSelectState.h"
+#include "Game.h"
 
 Player::Player(const LoaderParams* pParams) : SDLGameObject(pParams)
 {
@@ -13,12 +16,14 @@ void Player::update()
 {
 	setSprite();
 	
-	
 	onFloor();
+	collisionEnemy();
+	collisionFlag();
 	
 	handleInput();	// add our function
 	
-	move();
+	move();		// 스테이트에 따라 움직임 처리
+	fall();		// 추락시 게임스테이트 변경
 
 	setFrame();
 	
@@ -43,8 +48,6 @@ void Player::setSprite()
 		case Player::HOVERING:
 			m_textureID = "dekulink_hovering";
 			break;
-		case Player::HURT:
-			break;
 		default:
 			break;
 		}
@@ -67,9 +70,6 @@ void Player::setFrame()
 	case Player::HOVERING:
 		m_currentFrame = int(((SDL_GetTicks() / 100) % 2));
 		break;
-	case Player::HURT:
-		m_currentFrame = int(((SDL_GetTicks() / 100) % 2));
-		break;
 	default:
 		break;
 	}
@@ -78,22 +78,6 @@ void Player::setFrame()
 
 void Player::handleInput()
 {
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_RIGHT))
-	{
-		m_velocity.setX(2);
-	}
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_LEFT))
-	{
-		m_velocity.setX(-2);
-	}
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_UP))
-	{
-		m_velocity.setY(-2);
-	}
-	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_DOWN))
-	{
-		m_velocity.setY(2);
-	}
 	if (TheInputHandler::Instance()->isKeyDown(SDL_SCANCODE_SPACE))
 	{
 		jump();
@@ -126,10 +110,6 @@ void Player::move()
 		m_velocity.setX(0);
 		m_velocity.setY(1);
 		break;
-	case Player::HURT:
-		m_velocity.setX(0);
-		m_velocity.setY(0);
-		break;
 	default:
 		m_velocity.setX(0);
 		m_velocity.setY(0);
@@ -140,18 +120,41 @@ void Player::move()
 void Player::onFloor()
 {
 	if(state == RUNNING || state == FALLING || state == HOVERING)
-		for (int i = 0; i < PlayState::Instance()->list_floors.size(); i++)
+		for (int i = 0; i < PlayState::Instance()->list_floor.size(); i++)
 		{
-			if (checkCollision_to_Floor(dynamic_cast<SDLGameObject*>(PlayState::Instance()->list_floors[i])))
+			if (checkCollision_to_Floor(dynamic_cast<SDLGameObject*>(PlayState::Instance()->list_floor[i])))
 			{
 				setState(RUNNING);
+				printf("floor collision true\n");
+				break;
 			}
-			else if(!checkCollision_to_Floor(dynamic_cast<SDLGameObject*>(PlayState::Instance()->list_floors[i])) && state == RUNNING)
+			else if (!checkCollision_to_Floor(dynamic_cast<SDLGameObject*>(PlayState::Instance()->list_floor[i])) && state == RUNNING)
 			{
 				setState(FALLING);
-			}
+			}			
 		}
+}
 
+void Player::collisionEnemy()
+{
+	for (int i = 0; i < PlayState::Instance()->list_enemy.size(); i++)
+	{
+		if (checkCollision(dynamic_cast<SDLGameObject*>(PlayState::Instance()->list_enemy[i])))
+		{
+			TheGame::Instance()->getStateMachine()->changeState(GameOverState::Instance());
+		}
+	}
+}
+
+void Player::collisionFlag()
+{
+	for (int i = 0; i < PlayState::Instance()->list_flag.size(); i++)
+	{
+		if (checkCollision(dynamic_cast<SDLGameObject*>(PlayState::Instance()->list_flag[i])))
+		{
+			TheGame::Instance()->getStateMachine()->changeState(ModeSelectState::Instance());
+		}
+	}
 }
 
 void Player::jump()
@@ -173,13 +176,19 @@ void Player::jump()
 		case Player::HOVERING:
 			setState(FALLING);
 			break;
-		case Player::HURT:
-			break;
 		default:
 			break;
 		}
 
 		inputSuccessTime = SDL_GetTicks();
+	}
+}
+
+void Player::fall()
+{
+	if (m_position.GetY() >= 640)
+	{
+		TheGame::Instance()->getStateMachine()->changeState(GameOverState::Instance());
 	}
 }
 

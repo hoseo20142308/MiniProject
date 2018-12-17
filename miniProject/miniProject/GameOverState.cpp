@@ -79,6 +79,12 @@ bool GameOverState::onExit()
 	}
 	m_gameObjects.clear();
 
+	PlayState::Instance()->list_background.clear();
+	PlayState::Instance()->list_enemy.clear();
+	PlayState::Instance()->list_flag.clear();
+	PlayState::Instance()->list_floor.clear();
+	PlayState::Instance()->m_gameObjects.clear();
+
 	TheTextureManager::Instance()->clearFromTextureMap("gameovertext");
 	TheTextureManager::Instance()->clearFromTextureMap("mainbutton");
 	TheTextureManager::Instance()->clearFromTextureMap("restartbutton");

@@ -13,8 +13,7 @@ public:
 		RUNNING,
 		JUMPING,
 		FALLING,
-		HOVERING,
-		HURT
+		HOVERING
 	};
 
 	Player(const LoaderParams* p_Params);
@@ -48,8 +47,17 @@ private:
 	void setFrame();		// 스프라이트 이미지 별 모션 갯수가 다르기에 currentFrame 재설정
 	void handleInput();		// 입력 이벤트
 	void move();			// 상태에 따른 이동 처리 함수
-	void onFloor();
-	void jump();
-	bool checkCollision(SDLGameObject* coll);
-	bool checkCollision_to_Floor(SDLGameObject* coll);
+
+	
+	void jump();			// 점프 함수
+	
+	void fall();			// 추락 함수
+
+
+	void onFloor();			// 발판 충돌체크 함수
+	void collisionEnemy();	// 적 충돌체크 함수
+	void collisionFlag();	// 깃발 충돌체크 함수
+
+	bool checkCollision(SDLGameObject* coll);			// 게임 오브젝트 충돌체크 검사 함수
+	bool checkCollision_to_Floor(SDLGameObject* coll);	// 발판 충돌체크 검사 함수
 };

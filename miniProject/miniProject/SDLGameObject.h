@@ -15,6 +15,12 @@ public:
 	Vector2D& getPosition() { return m_position; }
 	int getWidth() { return m_dst_width; }
 	int getHeight() { return m_dst_height; }
+	int getrscWidth() { return m_width; }
+	int getrscHeight() { return m_height; }
+
+	int getType() { return type; }
+	void setType(int type) { this->type = type; }
+	string get_textureID() { return m_textureID; }
 
 
 protected:

@@ -22,6 +22,12 @@ public:
 	static void make_etc_sign();
 	static void make_etc_flag();
 
+	// 플레이 버튼 클릭 시
+	static void play();
+
+	Vector2D get_sPosition() { return s_position; }
+	void set_sPosition(Vector2D* vec) { s_position.setX(vec->GetX()); s_position.setY(vec->GetY()); }
+
 private:
 
 	Vector2D s_position;

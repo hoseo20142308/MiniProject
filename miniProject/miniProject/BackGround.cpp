@@ -17,6 +17,7 @@ BackGround::BackGround(const LoaderParams* p_Params, int type) : SDLGameObject(p
 void BackGround::update()
 {
 	move_bg();
+
 	change_position();
 
 	SDLGameObject::update();
@@ -29,8 +30,12 @@ void BackGround::move_bg()
 
 void BackGround::change_position()
 {
+	
+	if(m_position.GetX() >= 641)
+		m_position.setX(-639);
 	if (m_position.GetX() <= -640)
 		m_position.setX(640);
+	
 }
 
 void BackGround::draw()

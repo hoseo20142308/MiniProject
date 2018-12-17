@@ -5,6 +5,18 @@
 #include <map>
 
 
+typedef struct t_saveformat
+{
+	int posX;
+	int posY;
+	int s_width;
+	int s_height;
+	int d_width;
+	int d_height;
+	int type;
+
+} SaveFormat;
+
 class TextureManager
 {
 public:

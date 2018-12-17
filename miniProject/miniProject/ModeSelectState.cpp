@@ -1,5 +1,5 @@
 #include "ModeSelectState.h"
-#include "StageSelectState.h"
+#include "MakerState.h"
 #include "PlayState.h"
 #include "Game.h"
 #include "MenuButton.h"
@@ -56,6 +56,19 @@ bool ModeSelectState::onExit()
 
 	m_gameObjects.clear();
 
+
+	PlayState::Instance()->list_background.clear();
+	PlayState::Instance()->list_enemy.clear();
+	PlayState::Instance()->list_floor.clear();
+	PlayState::Instance()->list_flag.clear();
+	PlayState::Instance()->m_gameObjects.clear();
+
+	MakerState::Instance()->list_background.clear();
+	MakerState::Instance()->list_UI.clear();
+	MakerState::Instance()->m_gameObjects.clear();
+
+
+
 	TheTextureManager::Instance()->clearFromTextureMap("tutorialbutton");
 	TheTextureManager::Instance()->clearFromTextureMap("makerbutton");
 
@@ -82,6 +95,6 @@ void ModeSelectState::s_menuToTutorial()
 
 void ModeSelectState::s_menuToMaker()
 {
-	TheGame::Instance()->getStateMachine()->changeState(StageSelectState::Instance());
+	TheGame::Instance()->getStateMachine()->changeState(MakerState::Instance());
 	std::cout << "Maker button clicked" << endl;
 }

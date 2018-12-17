@@ -12,7 +12,7 @@ public:
 	virtual void update();
 	virtual void clean() {};
 private:
-	int moveSpeed = 5;
+	int moveSpeed = 10;
 
 	void setSprite();
 };

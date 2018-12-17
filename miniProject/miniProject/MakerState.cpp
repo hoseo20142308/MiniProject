@@ -13,6 +13,11 @@ void MakerState::update()
 {
 	MakerManager::Instance()->update();
 
+	for (int i = 0; i < list_background.size(); i++)
+	{
+		list_background[i]->update();
+	}
+
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->update();
@@ -29,6 +34,10 @@ void MakerState::update()
 
 void MakerState::render()
 {
+	for (int i = 0; i < list_background.size(); i++)
+	{
+		list_background[i]->draw();
+	}
 	
 	for (int i = 0; i < m_gameObjects.size(); i++)
 	{
@@ -46,6 +55,9 @@ void MakerState::render()
 
 bool MakerState::onEnter()
 {
+	m_gameObjects.clear();
+	MakerManager::Instance()->set_sPosition(new Vector2D(0, 0));
+
 	if(!allTextureLoad())
 	{
 		TheGame::Instance()->quit();
@@ -63,7 +75,7 @@ bool MakerState::onEnter()
 	GameObject* etcmakebutton1 = new MenuButton(new LoaderParams(420, 200, 60, 60, "signmakebutton"), MakerManager::Instance()->make_etc_sign);
 	GameObject* etcmakebutton2 = new MenuButton(new LoaderParams(490, 200, 60, 60, "flagmakebutton"), MakerManager::Instance()->make_etc_flag);
 
-	GameObject* savebutton = new MenuButton(new LoaderParams(480, 420, 100, 25, "savebutton"), s_menuToSave);
+	GameObject* savebutton = new MenuButton(new LoaderParams(480, 420, 100, 25, "playbutton"), MakerManager::Instance()->play);
 
 
 
@@ -80,8 +92,8 @@ bool MakerState::onEnter()
 	list_UI.push_back(etcmakebutton2);
 	list_UI.push_back(savebutton);
 
-	m_gameObjects.push_back(background1);
-	m_gameObjects.push_back(background2);
+	list_background.push_back(background1);
+	list_background.push_back(background2);
 
 	std::cout << "entering StageSelectState\n";
 	return true;
@@ -89,12 +101,24 @@ bool MakerState::onEnter()
 
 bool MakerState::onExit()
 {
-	for (int i = 0; i < m_gameObjects.size(); i++)
+	/*for (int i = 0; i < m_gameObjects.size(); i++)
 	{
 		m_gameObjects[i]->clean();
 	}
 
-	m_gameObjects.clear();
+	m_gameObjects.clear();*/
+
+	for (int i = 0; i < list_background.size(); i++)
+	{
+		list_background[i]->clean();
+	}
+	list_background.clear();
+
+	for (int i = 0; i < list_UI.size(); i++)
+	{
+		list_UI[i]->clean();
+	}
+	list_UI.clear();
 
 	allTextureClear();
 
@@ -153,7 +177,7 @@ bool MakerState::allTextureLoad()
 		return false;
 	}
 
-	if (!TheTextureManager::Instance()->load("assets/Resources/MakerState/button_save.png", "savebutton", TheGame::Instance()->getRenderer()))
+	if (!TheTextureManager::Instance()->load("assets/Resources/MakerState/button_play.png", "playbutton", TheGame::Instance()->getRenderer()))
 	{
 		return false;
 	}
